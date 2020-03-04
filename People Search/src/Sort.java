@@ -14,9 +14,6 @@ public class Sort {
 	}
 	
 	public NoahList<People> sort() {
-		NoahList<People> sorted = new NoahList<People>(list);
-		NoahList<String> names = new NoahList<String>();
-		
 		int n = list.size();
 
 		for (int i = 0; i < n - 1; i++) {

@@ -12,7 +12,7 @@ public class NoahList<T> implements List<T>{
 	private static final byte INITIAL_CAPACITY = 10;
 	
 	public NoahList() {
-		elementData = new Object[INITIAL_CAPACITY];
+		elementData = new Object[10];
 	}
 	
 	public NoahList(Object[] arr) {
@@ -37,9 +37,6 @@ public class NoahList<T> implements List<T>{
 
 	@Override
 	public boolean contains(Object o) {
-		for (Object a: elementData) {
-			return a.equals(o);
-		}
 		return false;
 	}
 
@@ -67,15 +64,12 @@ public class NoahList<T> implements List<T>{
 			size++;
 			elementData = Arrays.copyOf(elementData, size);
 		}
-		elementData[size-1] = t;
+		elementData[size++] = t;
 		return true;
 	}
 
-	public int indexOf(Object o)throws NullPointerException {
+	public int indexOf(Object o) {
 		int count = 0;
-		if(!contains(o)) {
-			throw new NullPointerException("No Instance of this Object");
-		}
 		for (Object a: elementData) {
 			if (o.equals(a)) {
 				return count;
@@ -124,12 +118,12 @@ public class NoahList<T> implements List<T>{
 
 	@Override
 	public T get(int index) {
-		return (T) elementData[index-1];
+		return (T) elementData[index];
 	}
 
 	@Override
 	public Object set(int index, Object element) {
-		elementData[index-1] = element;
+		elementData[index] = element;
 		return null;
 	}
 
@@ -138,11 +132,11 @@ public class NoahList<T> implements List<T>{
 		Object[] temp = elementData;
 		size++;
 		elementData = new Object[size];
-		for (int i = 0; i< index-1; i ++) {
+		for (int i = 0; i< index; i ++) {
 			elementData[i] = temp[i];
 		}
-		elementData[index-1] = element;
-		for (int i = 0; i>index - 1; i++) {
+		elementData[index] = element;
+		for (int i = 0; i>index; i++) {
 			elementData[i+1] = temp[i];
 		}
 		
@@ -150,8 +144,12 @@ public class NoahList<T> implements List<T>{
 
 	@Override
 	public T remove(int index) {
-		remove(elementData[index-1]);
-		return (T) (elementData[index-1]);
+		Object removed = elementData[index];
+		if(size - 1 - index >= 0) {
+			System.arraycopy(elementData, index + 1, elementData, index, size - 1 - index);
+		}
+		size--;
+		return (T) removed;
 	}
 
 	@Override
@@ -178,11 +176,11 @@ public class NoahList<T> implements List<T>{
 		return null;
 	}
 
+	
 	@Override
 	public boolean remove(Object o) {
 		boolean found = false;
 		Object[] temp = elementData;
-		size--;
 		elementData = new Object[size];
 		for (int i =0; i <size;i++) {
 			if (i == indexOf(o)) {

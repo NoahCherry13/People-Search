@@ -1,11 +1,11 @@
-
-public class People {
+public class People implements Comparable<People>{
 
 	public int age;
 	public String name;
 	
 	public People () {
-		
+		age = 0;
+		name = "";
 	}
 	
 	public People(String nm, int a) {
@@ -27,6 +27,11 @@ public class People {
 	
 	public int getAge() {
 		return age;
+	}
+
+	@Override
+	public int compareTo(People o) {
+		return getName().toLowerCase().compareTo(o.getName().toLowerCase());
 	}
 	
 }
