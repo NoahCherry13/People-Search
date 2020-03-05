@@ -23,7 +23,7 @@ public class Search<T extends Comparable<T>> {
 			} else {
 				return arr.get(n);
 			}
-			n = (f + end / 2);
+			n = ((f + end) / 2);
 		}
 		throw new NullPointerException("Item Not in List");
 	}

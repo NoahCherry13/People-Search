@@ -7,7 +7,7 @@ public class SearchDialog extends GBDialog {
 	JButton removeButton = addButton("Remove", 2, 2, 1, 1);
 	JTextField nmField = addTextField("", 1, 2, 1, 1);
 	JLabel nmLabel = addLabel("Name: ", 1, 1, 1, 1);
-	JButton lsButton = addButton("Fuck", 4, 1, 1, 1);
+	JButton lsButton = addButton("Linear Search", 4, 1, 1, 1);
 	NoahList<People> list;
 	int idx;
 
@@ -41,14 +41,17 @@ public class SearchDialog extends GBDialog {
 		
 		
 		} else if (b == lsButton) {
-			People found = null;
+			Sort s = new Sort(list);
+			list = s.sort();
 			Search<People> bs = new Search<People>(list);
-			for (int i = 0; i < list.size(); i++) {
-				found = bs.linearSearch(new People(nmField.getText(), 0));
-
+			try {
+				People found = bs.linearSearch(new People (nmField.getText(),0));
+				messageBox("Found:" + '\n' + "Name: " + found.getName() + "\nAge: " + found.getAge() + "\nIt took "
+						+ bs.getCount() + " Iterations");
+			}catch(Exception e) {
+				messageBox(e.getMessage());
 			}
-			messageBox("Found:" + '\n' + "Name: " + found.getName() + "\nAge: " + found.getAge() + "\nIt took "
-					+ bs.getCount() + " Iterations");
+			
 		}
 	}
 }
